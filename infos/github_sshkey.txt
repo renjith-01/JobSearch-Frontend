@@ -1,0 +1,26 @@
+# 1. Generate a personal SSH key (ed25519), saved as ~/.ssh/personal-github
+ssh-keygen -t ed25519 -C "renjith.personal" -f ~/.ssh/personal-github
+
+# 2. Start the ssh-agent and add the key
+eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/personal-github
+
+# 3. Copy the public key to clipboard (you then pasted it into
+#    GitHub → renjith-01 account → Settings → SSH and GPG keys → New SSH key)
+pbcopy < ~/.ssh/personal-github.pub
+
+# 4. Add the host alias to ~/.ssh/config
+cat >> ~/.ssh/config <<'EOF'
+
+Host github-personal
+  HostName github.com
+  User git
+  IdentityFile ~/.ssh/personal-github
+  IdentitiesOnly yes
+EOF
+
+# 5. Test the alias (should greet you as renjith-01)
+ssh -T git@github-personal
+
+# 6. Point a repo's remote at the alias (per repo, done at push time)
+git remote set-url origin git@github-personal:renjith-01/<repo>.git
