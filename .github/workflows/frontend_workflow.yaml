@@ -1,0 +1,24 @@
+# 1. The name of your workflow as it appears in GitHub
+name: GitHub Actions Demo
+
+# 2. The event that triggers this workflow (runs on every git push)
+on: [push]
+
+# 3. What the workflow actually does
+jobs:
+  explore-actions:
+    # Specifies the operating system of the runner
+    runs-on: ubuntu-latest
+
+    # The sequence of tasks to perform
+    steps:
+      # Reusable action that clones your repository code onto the runner
+      - name: Check out repository code
+        uses: actions/checkout@v4
+
+      # Runs standard shell commands
+      - name: Log message to the console
+        run: echo "Hello World! The code has been checked out successfully."
+
+      - name: List files in the repository
+        run: ls -la

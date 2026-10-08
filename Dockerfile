@@ -9,7 +9,8 @@ RUN npm run build
 # Step 2: Build Production ready build using nginx
 FROM nginx:stable-alpine AS production-stage
 COPY --from=build-stage /web-app/dist /usr/share/nginx/html
-EXPOSE 80
+# Expose 80 to the container. 
+EXPOSE 80   
 CMD ["nginx", "-g", "daemon off;"]
 
 
